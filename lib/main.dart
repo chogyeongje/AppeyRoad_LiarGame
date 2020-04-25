@@ -30,12 +30,17 @@ class MainPage extends StatefulWidget {
   static setEntryNum(int num){
     _MainPageState.entryNum = num;
   }
+
+  static setSpyMode(bool mode){
+    _MainPageState.isSpyMode = mode;
+  }
 }
 
 class _MainPageState extends State<MainPage> {
 
   static String currentSubejct = "";
   static int entryNum = 3;
+  static bool isSpyMode = false;
 
   @override
   Widget build(BuildContext context) {
@@ -201,7 +206,7 @@ class _MainPageState extends State<MainPage> {
               GestureDetector(
                 onTap: () {
                   if(currentSubejct.isNotEmpty){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => Sub(currentSubejct, entryNum)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Sub(currentSubejct, entryNum, isSpyMode)));
                   }
               },
                 child: Container(

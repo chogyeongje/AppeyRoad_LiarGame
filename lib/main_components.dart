@@ -179,6 +179,7 @@ class _OnOffButtonState extends State<OnOffButton> {
   void changeState(){
     setState(() {
       currentState = !currentState;
+      MainPage.setSpyMode(currentState);
     });
   }
 }

@@ -9,10 +9,12 @@ class Sub extends StatelessWidget {
 
   static String subject;
   static int entryNum;
+  static bool spyMode;
 
-  Sub(getSubject, getEntryNum){
+  Sub(String getSubject, int getEntryNum, bool getSpymode){
     subject = getSubject;
     entryNum = getEntryNum;
+    spyMode = getSpymode;
   }
 
   @override
@@ -48,7 +50,20 @@ class _CheckWordState extends State<CheckWord> {
   String word = subjectMap[Sub.subject][Random().nextInt(subjectMap[Sub.subject].length)];
   bool isHide = true;
   int liar = Random().nextInt(Sub.entryNum -1) + 1;
+  int spy = 0;
   int currentNum = 1;
+
+  @override
+  void initState() {
+    liar = Random().nextInt(Sub.entryNum - 1) + 1;
+    if(Sub.spyMode){
+      spy = Random().nextInt(Sub.entryNum - 2) + 1;
+      if(spy >= liar){
+        spy += 1;
+      }
+    }
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,9 +133,10 @@ class _CheckWordState extends State<CheckWord> {
       width: double.infinity,
       height: 100,
       child: Center(
-        child: liar == n
+        child: n == liar
             ? Text("라이어 당첨!", style: TextStyle(fontWeight: FontWeight.bold),)
-            : Text("제시어는 $word", style: TextStyle(fontWeight: FontWeight.bold),),
+            : n == spy ? Text("스파이 당첨!\n제시어는 $word", style: TextStyle(fontWeight: FontWeight.bold),)
+                        : Text("제시어는 $word", style: TextStyle(fontWeight: FontWeight.bold),),
       )
     );
   }
