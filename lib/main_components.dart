@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:liargame/main.dart';
 import 'data.dart';
 import 'package:searchable_dropdown/searchable_dropdown.dart';
 
@@ -43,6 +44,7 @@ class _NumEntryState extends State<NumEntry> {
     if(numOfEntry < 14){
       setState(() {
         numOfEntry += 1;
+        MainPage.setEntryNum(numOfEntry);
       });
     }
   }
@@ -51,24 +53,28 @@ class _NumEntryState extends State<NumEntry> {
     if(numOfEntry > 3){
       setState(() {
         numOfEntry -= 1;
+        MainPage.setEntryNum(numOfEntry);
       });
     }
   }
 }
 
 class SelectSubject extends StatefulWidget {
+
   @override
   _SelectSubjectState createState() => _SelectSubjectState();
 }
 
 class _SelectSubjectState extends State<SelectSubject> {
 
+  _SelectSubjectState();
+
   final List<DropdownMenuItem> subjects = [];
   String currentSubject = "주제";
 
   @override
   void initState() {
-    for(String s in subjectList){
+    for(String s in subjectMap.keys){
       subjects.add(
         DropdownMenuItem(
           child: Text(s),
@@ -93,6 +99,7 @@ class _SelectSubjectState extends State<SelectSubject> {
               onChanged: (subject){
                 setState(() {
                   currentSubject = subject;
+                  MainPage.setSubject(subject);
                 });
               },
             isExpanded: false,
@@ -116,7 +123,7 @@ class _OnOffButtonState extends State<OnOffButton> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
-      child: setButton(currentState),
+      child: currentState ? onButton() : offButton(), //setButton(currentState),
     );
   }
 
